@@ -1,0 +1,35 @@
+server:
+  port : 8999
+
+# Oracle Connect
+spring:
+  datasource:
+   url: jdbc:oracle:thin:@localhost:1521/xe
+   username: usertest01
+   password: tiger
+   driver-class-name: oracle.jdbc.driver.OracleDriver
+   
+   # Jpa Setting  
+  jpa: 
+    hibernate:
+      ddl-auto: update # none   update
+    properties:
+      hibernate:
+        default_batch_fetch_size : 500 
+      show_sql:   true         # System.out 에 하이버네이트 실행 SQL
+      format_sql: true
+  
+  # view Resolver
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp    
+  
+# Mybatis
+mybatis:
+  config-location: classpath:configuration.xml
+  mapper-locations: classpath:mappers/*.xml
+  
+logging.level:
+  org.hibernate.SQL: debug   # logger를 통해 하이버네이트 실행 SQL
+      
