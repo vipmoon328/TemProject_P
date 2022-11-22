@@ -7,9 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>기능 테스트</h1>
-	<a href="/signUpForm">회원가입</a><p>
-	<a href="/loginForm">로그인</a><p>
-	<a href="/findIdPwForm">아이디/비밀번호 찾기</a><p>
+
 </body>
 </html>

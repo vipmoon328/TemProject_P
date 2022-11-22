@@ -109,5 +109,25 @@ public class EmpDaoImpl implements EmpDao {
 		return emp;
 	}
 
+	@Override
+	public Emp getInfo(int emp_num) {
+		System.out.println("EmpDaoImpl getInfo Start");
+		
+		Emp emp = new Emp();
+		try {
+			emp = em.find(Emp.class, emp_num);
+		} catch (Exception e) {
+			System.out.println("EmpDaoImpl getInfo 에러 발생");
+		}
+		
+		return emp;
+	}
+
+	@Override
+	public int changePw(String emp_passwd) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 }

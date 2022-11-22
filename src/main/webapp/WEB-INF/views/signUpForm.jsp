@@ -323,9 +323,6 @@
 			//	페이지 로딩 완료 후 focus 이동 - 처음에 label zoom 효과 안되는 오류 수정(임시방편)
 			$(document).ready(function(){
 				$("input[type='text']:first, input[type='password']:first").focus();
-				$("[data-toggle='tooltip']:first").focus();
-				// 'tooltip'에 탭사용 안되게 수정
-				$("[data-toggle='tooltip']").attr("tabindex", "-1");		
 			});
 
 			//	Label Zoom 효과 - input/select 선택했을 때
@@ -335,15 +332,11 @@
 				$input.on({
 					'focus': function () { // input 태그가 focus를 가지면 'focus' class 추가
 						$(this).parent().addClass('focus');
-						// 선택한 input의 툴팁 보여주기
-						$(this).siblings("[data-toggle='tooltip']").tooltip('show');
 					},
 					'blur': function () { // input 태그가 focus를 잃으면
 						if ($(this).val() == '') { // input 태그에  값이 없으면 'focus' class 삭제
 							$(this).parent().removeClass('focus');                
-						} 
-						// 선택한 input에서 다른곳으로 focus가 이동하면 툴팁 숨기기
-						$(this).siblings("[data-toggle='tooltip']").tooltip('hide');           
+						}           
 					}
 				});
 				// 'textbox' class가 적용된 태그 안에서 select 검색

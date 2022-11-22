@@ -124,11 +124,8 @@ $(function(){
 				     		              
 				
 				        <hr>
-				        <a href="${pageContext.request.contextPath}/member/search" class="btn btn-google btn-user btn-block">
-				                    	아이디 / 비밀번호 찾기
-				        </a>
-				                    
-				        <a href="/signUpForm" class="btn btn-facebook btn-user btn-block">계정</a>
+				        <a href="/findIdPwForm" class="btn btn-google btn-user btn-block">아이디 / 비밀번호 찾기</a>				                  
+				        <a href="/signUpForm" class="btn btn-facebook btn-user btn-block">회원 가입</a>
 				        <hr>
 	         		</div>
 	       		</div>

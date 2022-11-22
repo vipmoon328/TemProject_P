@@ -51,4 +51,29 @@ public class EmpService {
 		return emp;
 	}
 
+	public Emp getInfo(int emp_num) {
+		System.out.println("EmpService getInfo Start");
+		Emp emp = new Emp();
+		
+		try {
+			emp = ep.getInfo(emp_num);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return emp;
+	}
+
+	public int changePw(String emp_passwd) {
+		System.out.println("EmpService changePw Start");
+		int result = 0;
+		try {
+			result = ep.changePw(emp_passwd);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return result;
+	}
+
 }

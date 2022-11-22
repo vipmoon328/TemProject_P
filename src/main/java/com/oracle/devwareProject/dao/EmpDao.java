@@ -16,4 +16,8 @@ public interface EmpDao
 
 	Emp login(String emp_id);
 
+	Emp getInfo(int emp_num);
+
+	int changePw(String emp_passwd);
+
 }
