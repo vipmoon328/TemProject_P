@@ -10,7 +10,6 @@ import lombok.Data;
 public class Position {
 	@Id
 	private int position_num;
-	
 	private String position_name;
 	
 }

@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+
 @Configuration
 //filter chain을 관리를 시작하는 annotation이다
 @EnableWebSecurity
@@ -29,8 +30,19 @@ public class SecurityConfig {
 		//Authentication 인증 (내가 사용자인가 아닌가)
 		//authorization 인가 (인증은 받았지만 권한을 확인)
 		http.authorizeRequests().anyRequest().permitAll();
-
+		
+		/*
+		 * //로그인 설정 http. formLogin() .loginPage("/loginForm")
+		 * .loginProcessingUrl("/login") .defaultSuccessUrl("/");
+		 * 
+		 * //로그아웃 설정 http. logout() .logoutRequestMatcher(new
+		 * AntPathRequestMatcher("/logOut")) .logoutSuccessUrl("/loginForm")
+		 * .invalidateHttpSession(true);
+		 */
+		
 		return http.build();
+		
+
 	}
 	
 }

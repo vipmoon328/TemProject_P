@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>유저 메인 페이지</title>
 </head>
 <body>
-
+	${emp.emp_name}님 환영합니다.
 </body>
 </html>

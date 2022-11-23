@@ -440,12 +440,11 @@ function changeDomain()
 			<input type="hidden" id="result_emp_num">
 			
 	        <!-- Modal footer -->
-	        <div class="modal-footer">       		
+	        <div class="modal-footer">
+	           	
 	           	<button type="button" class="btn btn-primary btn-sm" onclick="changePw()" data-dismiss="modal">비밀번호 변경</button>
-		     
-		       	<div class="form-group textbox">
-		 			<a href="/loginForm" class="btn btn-primary btn-sm" data-dismiss="modal">로그인 창으로 돌아가기 </a>
-				</div>
+				<button type="button" class="btn btn-primary btn-sm" onclick="location.href = '<%=context%>/loginForm'" data-dismiss="modal">로그인 창으로 돌아가기</button>
+				
 	        </div>
 	        
 	      </div>

@@ -25,17 +25,31 @@ function loginCheck()
 	var v_emp_id = $('#emp_id').val();
 	var v_emp_passwd = $('#emp_passwd').val();
 	
+	if(v_emp_id == "")
+	{
+		alert("아이디를 입력해주세요 ");
+	}
+	
+	if(v_emp_passwd == "")
+	{
+		alert("비밀번호를 입력해주세요 ");
+	}
+	
 	$.ajax({
 		url : "<%=context%>/login",
 		type : 'post',
-		data : { emp_id : v_emp_id, 
-			     emp_passwd : v_emp_passwd},
-			     
+		data : { 
+			emp_id : v_emp_id, 
+			emp_passwd : v_emp_passwd
+		},
+	
 		success:function(data)
 		{
 			if(data.result == 1)
 			{
+				console.log(JSON.stringify(data));
 				alert(data.msg);
+				location.href='<%=context%>/auth_finder';
 			}
 			else
 			{
@@ -43,6 +57,7 @@ function loginCheck()
 				alert("아이디 혹은 비밀번호를 다시 확인해주세요");
 			}
 		}
+		
 	});
 }
 

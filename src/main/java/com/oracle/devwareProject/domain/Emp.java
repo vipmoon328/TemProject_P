@@ -60,4 +60,6 @@ public class Emp
 	@Transient
 	private int result; //결과 상태창
 	
+	@Transient
+	private int auth_num; //권한 
 }

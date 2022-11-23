@@ -1,9 +1,8 @@
-package com.oracle.devwareProject.dao;
+package com.oracle.devwareProject.dao.GH;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -116,17 +115,41 @@ public class EmpDaoImpl implements EmpDao {
 		Emp emp = new Emp();
 		try {
 			emp = em.find(Emp.class, emp_num);
+			// emp NULL --> 못 찾은 경우
+			if (emp == null) {
+				emp = new Emp();
+				emp.setResult(0);
+				emp.setMsg("아이디 찾기에 실패하셨습니다.");
+			} 
 		} catch (Exception e) {
 			System.out.println("EmpDaoImpl getInfo 에러 발생");
 		}
-		
+		System.out.println("결과 값: "+ emp.getEmp_name());
 		return emp;
 	}
 
 	@Override
-	public int changePw(String emp_passwd) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int changePw(String emp_passwd, int emp_num) {
+		int result = 0;
+		try { 
+			 result = em.createQuery("UPDATE Emp e SET e.emp_passwd = :emp_passwd WHERE e.emp_num = :emp_num")
+			.setParameter("emp_passwd", emp_passwd)
+			.setParameter("emp_num", emp_num)
+			.executeUpdate();
+			 
+			 em.clear();
+		} catch (Exception e) {
+			System.out.println("EmpDaoImpl changePw 에러 발생");
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<Emp> getAllUserInfo() 
+	{
+		List<Emp> emplist = new ArrayList<Emp>();
+		return null;
 	}
 
 

@@ -1,4 +1,6 @@
-package com.oracle.devwareProject.dao;
+package com.oracle.devwareProject.dao.GH;
+
+import java.util.List;
 
 import com.oracle.devwareProject.domain.Emp;
 import com.oracle.devwareProject.domain.EmpList;
@@ -18,6 +20,8 @@ public interface EmpDao
 
 	Emp getInfo(int emp_num);
 
-	int changePw(String emp_passwd);
+	int changePw(String emp_passwd, int emp_num);
+
+	List<Emp> getAllUserInfo();
 
 }
