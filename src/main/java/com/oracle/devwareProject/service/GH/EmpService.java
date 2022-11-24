@@ -7,14 +7,18 @@ import org.springframework.stereotype.Service;
 
 import com.oracle.devwareProject.dao.GH.EmpDao;
 import com.oracle.devwareProject.domain.Emp;
+import com.oracle.devwareProject.domain.EmpForSearch;
 import com.oracle.devwareProject.domain.EmpList;
+import com.oracle.devwareProject.domain.Page;
+import com.oracle.devwareProject.repository.GH.EmpRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class EmpService {
-	private final EmpDao ep;
+	private final EmpRepository ep;
+	private final EmpDao ed;
 	
 	public int empSave(Emp emp) 
 	{
@@ -81,15 +85,28 @@ public class EmpService {
 		return result;
 	}
 
-	public List<Emp> getAllUserInfo() {
+	public List<EmpForSearch> getAllUserInfo(Page pg) {
 		System.out.println("EmpService getAllUserInfo Start");
-		List<Emp> emplist = new ArrayList<Emp>();
+		List<EmpForSearch> emplist = new ArrayList<EmpForSearch>();
 		try {
-			emplist = ep.getAllUserInfo();
+			emplist = ed.getAllUserInfo(pg);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return emplist;
+	}
+
+	public int getEmpCount() {
+		int count = 0;
+		System.out.println("EmpService getEmpCount Start");
+		List<EmpForSearch> emplist = new ArrayList<EmpForSearch>();
+		try {
+			emplist = ed.getAllUserInfo();
+			count = emplist.size();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return count;
 	}
 
 }

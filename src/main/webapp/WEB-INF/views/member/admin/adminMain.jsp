@@ -7,6 +7,7 @@
 <title>관리자 메인 페이지</title>
 </head>
 <body>
-	${emp.emp_name}님 환영합니다.
+	${emp.emp_name}님 환영합니다.<p>
+	<a href="/userlist">유저 리스트</a>
 </body>
 </html>

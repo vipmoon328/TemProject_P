@@ -121,13 +121,13 @@ $(function(){
 							<!-- 아이디 -->
 							<div class="form-group textbox">
 								<label for="emp_id">아이디를 입력하세요</label>
-								<input type="text" class="form-control" id="emp_id" name="emp_id" maxlength="15" required="required">
+								<input type="text" class="form-control" id="emp_id" name="emp_id" value="woosuck1214" maxlength="15" required="required">
 							</div>
 								
 							<!-- 비밀번호 -->
 							<div class="form-group textbox">
 								<label for="emp_passwd">비밀번호를 입력하세요</label>
-								<input type="password" class="form-control" id="emp_passwd" name="emp_passwd" maxlength="16" style="ime-mode: disabled;" required="required" >
+								<input type="password" class="form-control" id="emp_passwd" name="emp_passwd" value="12341234" maxlength="16" style="ime-mode: disabled;" required="required" >
 							</div>
 							
 							<!-- 로그인 버튼 -->

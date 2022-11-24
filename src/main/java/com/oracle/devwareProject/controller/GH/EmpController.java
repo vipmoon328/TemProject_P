@@ -20,9 +20,11 @@ import com.oracle.devwareProject.domain.Dept;
 import com.oracle.devwareProject.domain.Emp;
 import com.oracle.devwareProject.domain.EmpForSearch;
 import com.oracle.devwareProject.domain.EmpList;
+import com.oracle.devwareProject.domain.Page;
 import com.oracle.devwareProject.domain.Position;
 import com.oracle.devwareProject.domain.Status;
 import com.oracle.devwareProject.service.GH.EmpService;
+import com.oracle.devwareProject.service.GH.Paging;
 
 import lombok.RequiredArgsConstructor;
 
@@ -49,37 +51,48 @@ public class EmpController
 		{
 			model.addAttribute("emp",emp);
 			model.addAttribute("empForSearch",empForSearch);
-			return "member/admin/adminMain";
+			return "/member/admin/adminMain";
 		}
 		
 		else
 		{	
 			model.addAttribute("emp",emp);
 			model.addAttribute("empForSearch",empForSearch);
-			return "member/user/userMain";
+			return "/member/user/userMain";
 		}
 	}
 	
-	@GetMapping("/logOut")
-	public String logOut(HttpSession session)
+	@RequestMapping("/userMyPageForm")
+	public String myPageForm(HttpSession session,Model model)
+	{
+		Emp emp = (Emp) session.getAttribute("emp");
+		System.out.println("EmpService myPageForm Start");
+		
+		model.addAttribute(emp);
+		return "/member/userMyPageForm";
+	}
+	
+	@RequestMapping("/logoutForm")
+	public String logout(HttpSession session)
 	{
 		session.invalidate();
-		return "member/logout";
+		return "/member/logoutForm";
 	}
 	
 	@GetMapping("/signUpForm")
 	public String signUp() {
-		return "member/signUpForm";
+		return "/member/signUpForm";
 	}
 	
 	@GetMapping("/loginForm")
 	public String loginForm() {
-		return "member/loginForm";
+		return "/member/loginForm";
 	}
 	
 	@GetMapping("/findIdPwForm")
 	public String findIdPwForm() {
-		return "member/findIdPwForm";
+
+		return "/member/findIdPwForm";
 	}
 	
 	@ResponseBody
@@ -291,7 +304,7 @@ public class EmpController
 		else {
 			System.out.println("Emp 테이블 직원 저장 실패");
 		}
-		return "member/loginForm";
+		return "/member/loginForm";
 	}
 	
 	@ResponseBody
@@ -341,19 +354,39 @@ public class EmpController
 		
 		return result;
 	}
-	
+		
 	@RequestMapping("/userlist")
-	public String userlist(Model model)
+	public String userlist(Model model, HttpSession session, String currentPage)
 	{
+		Emp emp = (Emp) session.getAttribute("emp");
+		EmpForSearch empForSearch = (EmpForSearch) session.getAttribute("empForSearch");
 		System.out.println("EmpService userlist [모든 유저 조회 기능] Start");
 		
-		List<Emp> emplist = new ArrayList<Emp>();
+		//직원 조회를 위한 리스트
+		List<EmpForSearch> emplist = new ArrayList<EmpForSearch>();
+		
+		Page pg = new Page();
+		
+		//전체 직원수를 체크
+		int totalEmp = empService.getEmpCount();
+		
+		System.out.println("모든 사용자의 수 : "+ totalEmp);
+		
+		Paging page = new Paging(totalEmp, currentPage);
+		pg.setStart(page.getStart());
+		pg.setEnd(page.getEnd());
+		
 		try {
-			emplist = empService.getAllUserInfo();
-			System.out.println("모든 사용자의 수 : "+ emplist.size());
+			//직원 조회를 기능 수행
+			emplist = empService.getAllUserInfo(pg);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return "";
+		
+		model.addAttribute("emplist",emplist);
+		model.addAttribute("emp",emp);
+		model.addAttribute("page", page);
+		
+		return "/member/admin/userlist";
 	}
 }

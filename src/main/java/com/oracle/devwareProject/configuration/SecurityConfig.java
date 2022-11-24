@@ -31,15 +31,6 @@ public class SecurityConfig {
 		//authorization 인가 (인증은 받았지만 권한을 확인)
 		http.authorizeRequests().anyRequest().permitAll();
 		
-		/*
-		 * //로그인 설정 http. formLogin() .loginPage("/loginForm")
-		 * .loginProcessingUrl("/login") .defaultSuccessUrl("/");
-		 * 
-		 * //로그아웃 설정 http. logout() .logoutRequestMatcher(new
-		 * AntPathRequestMatcher("/logOut")) .logoutSuccessUrl("/loginForm")
-		 * .invalidateHttpSession(true);
-		 */
-		
 		return http.build();
 		
 

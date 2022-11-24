@@ -3,25 +3,11 @@ package com.oracle.devwareProject.dao.GH;
 import java.util.List;
 
 import com.oracle.devwareProject.domain.Emp;
-import com.oracle.devwareProject.domain.EmpList;
+import com.oracle.devwareProject.domain.EmpForSearch;
+import com.oracle.devwareProject.domain.Page;
 
-public interface EmpDao 
-{
+public interface EmpDao {
+	public List<EmpForSearch> getAllUserInfo(Page pg);
 
-	int empSave(Emp emp);
-	
-	EmpList getEmpData(int emp_num);
-
-	int checkEmpId(String emp_id);
-
-	int checkSignEmp(int emp_num);
-
-	Emp login(String emp_id);
-
-	Emp getInfo(int emp_num);
-
-	int changePw(String emp_passwd, int emp_num);
-
-	List<Emp> getAllUserInfo();
-
+	public List<EmpForSearch> getAllUserInfo();
 }
