@@ -68,8 +68,10 @@ public class EmpController
 		Emp emp = (Emp) session.getAttribute("emp");
 		System.out.println("EmpService myPageForm Start");
 		
+		System.out.println("Name : "+emp.getEmp_name());
+		
 		model.addAttribute(emp);
-		return "/member/userMyPageForm";
+		return "/member/user/userMyPageForm";
 	}
 	
 	@RequestMapping("/logoutForm")
