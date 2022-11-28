@@ -109,4 +109,16 @@ public class EmpService {
 		return count;
 	}
 
+	public int updateEmp(Emp emp) {
+		System.out.println("EmpService updateEmp Start");
+		int result = 0;
+		try {
+			result = ed.updateEmp(emp);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return result;
+	}
+
 }

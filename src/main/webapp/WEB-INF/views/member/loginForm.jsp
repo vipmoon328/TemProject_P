@@ -121,7 +121,7 @@ $(function(){
 							<!-- 아이디 -->
 							<div class="form-group textbox">
 								<label for="emp_id">아이디를 입력하세요</label>
-								<input type="text" class="form-control" id="emp_id" name="emp_id" value="woosuck1214" maxlength="15" required="required">
+								<input type="text" class="form-control" id="emp_id" name="emp_id" value="gunhee1234" maxlength="15" required="required">
 							</div>
 								
 							<!-- 비밀번호 -->

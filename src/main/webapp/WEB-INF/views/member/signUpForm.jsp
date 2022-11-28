@@ -88,7 +88,10 @@
 		{	
 			changeId(); //회원 가입전 아이디 변동 유효성을 체크하기 위한 함수 
 			var check = true;
-			var address = $('#postcode').val() + " " + $('#address').val() + " " + $('#detailAddress').val();
+			
+			//주소 값들을 하나의 문자열로 구성하기 위함
+			
+			var address = $('#postcode').val() + " " + $('#address').val() + " /" + $('#detailAddress').val();
 			var email = $('#user_email1').val() + "@" +  $('#user_email2').val()
 			
 			$('#emp_address').attr('value', address);
@@ -480,7 +483,6 @@
 				<div class="input-group">
 				<div class="form-group textbox mr-3"> 
 					<label for="postcode">우편번호</label>
-					<a href="#" data-toggle="tooltip" data-placement="left" title="필수입력사항"></a>
 					<input type="text" class="form-control" id="postcode" name="member_address1" readonly tabindex="-1">	
 				</div>
 				<div class="form-group textbox">

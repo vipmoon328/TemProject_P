@@ -10,4 +10,6 @@ public interface EmpDao {
 	public List<EmpForSearch> getAllUserInfo(Page pg);
 
 	public List<EmpForSearch> getAllUserInfo();
+
+	public int updateEmp(Emp emp);
 }

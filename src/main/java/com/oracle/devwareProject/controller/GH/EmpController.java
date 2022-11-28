@@ -40,6 +40,8 @@ public class EmpController
 		return "/member/index";
 	}
 	
+
+	
 	@GetMapping("/auth_finder")
 	public String auth_finder(HttpSession session,Model model)
 	{
@@ -390,5 +392,63 @@ public class EmpController
 		model.addAttribute("page", page);
 		
 		return "/member/admin/userlist";
+	}
+	
+	@PostMapping("/editInfo")
+	public String upDateUser(Emp new_emp, Model model, HttpSession session)
+	{
+		Emp emp = (Emp) session.getAttribute("emp");
+		System.out.println("EmpService editInfo Start");
+		int result = 0;
+		
+		try {
+			//이름 변경
+			emp.setEmp_name(new_emp.getEmp_name());
+			System.out.println("이름: "+new_emp.getEmp_name());
+			
+			//비밀번호 수정한 경우 암호화 한 후 다시 변경 
+			if(emp.getEmp_passwd().equals(new_emp.getEmp_passwd()))
+			{
+				emp.setEmp_passwd(new_emp.getEmp_passwd());
+			}
+			
+			else {
+				String temp = new_emp.getEmp_passwd();
+				temp = encoder.encode(temp);
+				emp.setEmp_passwd(temp);
+			}
+			
+			System.out.println("비밀번호: "+emp.getEmp_passwd());
+			
+			//이메일 변경
+			emp.setEmp_email(new_emp.getEmp_email());
+			
+			System.out.println("이메일: "+new_emp.getEmp_email());
+			
+			//주소 변경
+			emp.setEmp_address(new_emp.getEmp_address());
+			
+			System.out.println("주소: " + new_emp.getEmp_address());
+			
+			//변경 사항을 반영한 update문 
+			result = empService.updateEmp(emp);
+			
+			if(result == 1)
+			{
+				System.out.println("회원 정보 변경에 성공하였습니다.");
+			}
+			else if(result == 2)
+			{
+				System.out.println("회원 정보 변경에 실패하였습니다.");
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		model.addAttribute("emp",emp);
+		model.addAttribute("result",result);
+		
+		return "/member/user/userMyPageForm";
 	}
 }

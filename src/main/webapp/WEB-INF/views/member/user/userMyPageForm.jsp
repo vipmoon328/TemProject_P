@@ -30,12 +30,14 @@
 		}
 		
 		//회원 가입 유효성 체크 
-		function signUpCheck()
+		function updateUpCheck()
 		{	
-			changeId(); //회원 가입전 아이디 변동 유효성을 체크하기 위한 함수 
 			var check = true;
-			var address = $('#postcode').val() + " " + $('#address').val() + " " + $('#detailAddress').val();
+			var address = $('#postcode').val() + " " + $('#address').val() + " /" + $('#detailAddress').val();
 			var email = $('#user_email1').val() + "@" +  $('#user_email2').val()
+			
+			alert(address);
+			alert(email);
 			
 			$('#emp_address').attr('value', address);
 			$('#emp_email').attr('value', email);
@@ -49,26 +51,6 @@
 			if($('#emp_passwd').val().length < 8)
 			{
 				alert('패스워드는 보안상의 이유로 8글자 이상 입력해주세요');
-				check = false;
-			}
-			
-			if($('#dept_num').val() == "")
-			{
-				check = false;
-			}
-			
-			if($('#auth_num').val() == "")
-			{
-				check = false;
-			}
-			
-			if($('#status_num').val() == "")
-			{
-				check = false;
-			}
-			
-			if($('#position_num').val() == "")
-			{
 				check = false;
 			}
 			
@@ -133,81 +115,115 @@
 			}).open();
 		}
 
-		$(function(){
-			//	페이지 로딩 완료 후 focus 이동 - 처음에 label zoom 효과 안되는 오류 수정(임시방편)
-			$(document).ready(function(){
-				$("input[type='text']:first, input[type='password']:first").focus();
-			});
-
-			//	Label Zoom 효과 - input/select 선택했을 때
-			$("input, select").focus(function() {
-				// 'textbox' class가 적용된 태그 안에서 input[type="text"], input[type="password"] 검색
-				var $input = $('.textbox').find('input[type="text"], input[type="password"]');
-				$input.on({
-					'focus': function () { // input 태그가 focus를 가지면 'focus' class 추가
-						$(this).parent().addClass('focus');
-					},
-					'blur': function () { // input 태그가 focus를 잃으면
-						if ($(this).val() == '') { // input 태그에  값이 없으면 'focus' class 삭제
-							$(this).parent().removeClass('focus');                
-						}           
-					}
-				});
-				// 'textbox' class가 적용된 태그 안에서 select 검색
-				var $select = $('.textbox').find('select');
-				$select.on({
-					'change': function () { // select 태그 값이 change가 발생하면 'focus' class 추가
-						$(this).parent().addClass('focus');
-					}
-				});
-			});
-
-			//	회원가입 중에 오류가 날 때 zoom 관련 css 초기화 되어 다시 설정
-			$('input[type=text], input[type=password], select').each(function () {
-				if ($(this).val() !== '') { // input 태그가 value값을 가지면 'focus' class 추가
-					// label focus
-					$(this).closest('.textbox').addClass('focus');
-				} else { // input 태그에  value값이 없으면 'focus' class 삭제
-					$(this).closest('.textbox').removeClass('focus');
-				}
-			});
+		$(function()
+		{	
+			//이메일 값 나누기
+			var email = '${emp.emp_email}';
+			var user_email = email.split('@');
+			var user_email1 = user_email[0];
+			var user_email2 = user_email[1];
 			
-			var email = {emp.email};
-			alert(email);
+			$('#user_email1').attr('value', user_email1);
+			$('#user_email2').attr('value', user_email2);
 			
-		});
-		
+			//주소 값 불러온 후 나눠서 넣기
+			var address1 = '${emp.emp_address}';
+			var index1 = address1.indexOf(' ');
+			var index2 = address1.indexOf('/');
+			
+			var postcode = address1.substr(0, index1);
+			var address =  address1.substr(index1,index2-index1);
+			var detailAddress = address1.substr(index2+1);
+			
+			$('#postcode').attr('value', postcode);
+			$('#address').attr('value', address);
+			$('#detailAddress').attr('value', detailAddress);
+			
+			if('${result}' == 1)
+			{
+				alert("회원 정보 변경에 성공했습니다.");
+			}
+			else if('${result}' == 2)
+			{
+				alert("회원 정보 변경에 실패했습니다.");
+			}
+			
+		});	
 </script>
 <head>
+<style type="text/css">
+	.form-control {
+		display: inline;
+		width: 50%;
+		height: calc(1.5em + .75rem + 2px);
+		padding: .375rem .75rem;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #6e707e;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #d1d3e2;
+		border-radius: .35rem;
+		-webkit-transition: border-color .15s ease-in-out, -webkit-box-shadow
+			.15s ease-in-out;
+		transition: border-color .15s ease-in-out, -webkit-box-shadow .15s
+			ease-in-out;
+		transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+		transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out,
+			-webkit-box-shadow .15s ease-in-out
+		}
+		
+	#postcode {
+		width: 300px;
+	}
+	
+</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 	<div class="container-fluid">
 		<h3>마이페이지</h3>
-		<form action="/editInfo" >
+		<form action="/editInfo" method="post">
 			<table class="table table-hover text-center">
 				<tr>
 					<th><label for="emp_name">사번</label></th>
-					<td><input type="text" readonly="readonly" id="emp_nun" name="emp_nun" value="${emp.emp_num}"}></td>
+					<td><input type="text"   class="form-control" readonly tabindex="-1" id="emp_nun" name="emp_nun" value="${emp.emp_num}"}></td>
 				</tr>
 				<tr>
 					<th><label for="emp_name">이름</label></th>
-					<td><input type="text" id="emp_name" name="emp_name" value="${emp.emp_name}"}></td>
+					<td><input type="text"  class="form-control" id="emp_name" name="emp_name" value="${emp.emp_name}"}></td>
 				</tr>
 				<tr>
 					<th><label for="emp_name">아이디</label></th>
-					<td><input type="text" readonly="readonly" id="emp_id" name="emp_id" value="${emp.emp_id}"}></td>
+					<td><input type="text"   class="form-control" readonly tabindex="-1" id="emp_id" name="emp_id" value="${emp.emp_id}"}></td>
 				</tr>
 				<tr>
 					<th><label for="emp_name">비밀번호</label></th>
-					<td><input type="password" id="emp_passwd" name="emp_passwd" value="${emp.emp_passwd}"}></td>
+					<td><input type="password"  class="form-control" id="emp_passwd" name="emp_passwd" value="${emp.emp_passwd}"}></td>
 				</tr>
 				<tr>
 					<th><label for="chk_emp_passwd">비밀번호 재확인</label></th>
-					<td><input type="password" id="chk_emp_passwd" name="chk_emp_passwd" value="${emp.emp_passwd}"}></td>
+					<td><input type="password"  class="form-control" id="chk_emp_passwd" name="chk_emp_passwd" value="${emp.emp_passwd}"}></td>
 				</tr>
-					
+				<tr>
+					<th>성별</th> 
+					<td>
+						<c:choose>
+							<c:when test="${emp.emp_gender eq '남'}">
+								<input type="radio" name="emp_gender" value="남" checked="checked">남성  
+								
+								<input type="radio" name="emp_gender" value="여" onclick="return false">여성  
+							</c:when>
+							<c:otherwise>
+								<input type="radio" name="emp_gender" value="남" onclick="return false">남성  
+								
+								<input type="radio" name="emp_gender" value="여" checked="checked">여성
+							</c:otherwise>
+						</c:choose>
+					</td>
+				</tr>
 				<tr>
 					<th><label for="user_email">이메일</label></th>
 					<td><input type="text" class="form-control" name="user_email1" id="user_email1" required="required"> <br> 
@@ -220,8 +236,30 @@
 					</select></td>
 				</tr>
 				
+				<tr>
+					<th><label for="postcode">우편번호</label></th>
+					<td><input type="text" class="form-group form-control" id="postcode" name="member_address1" readonly tabindex="-1">
+					<input type="button" class="btn btn-primary" onclick="DaumPostcode()" value="우편번호 찾기"></span></td>
+				</tr>
 				
+				<tr>
+					<th><label for="address">주소</label></th>
+					<td><input type="text" class="form-control" id="address" name="member_address2" readonly tabindex="-1"></td>
+				</tr>
+				
+				<tr>
+					<th><label for="detailAddress">상세주소</label></th>
+					<td><input type="text"  class="form-control" id="detailAddress" name="member_address3">
+					<input type="hidden" id="extraAddress" placeholder="참고항목"></td>
+				</tr>
+				
+				<tr>	
+					<td><input type="submit" onclick="updateUpCheck()" value="수정하기"></td>
+				</tr>
+
 			</table>
+			<input type="hidden" id="emp_address" name ="emp_address"> 
+			<input type="hidden" id="emp_email" name = "emp_email"> 
 		</form>
 	</div>
 </body>

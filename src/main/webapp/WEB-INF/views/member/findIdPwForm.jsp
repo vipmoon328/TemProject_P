@@ -75,6 +75,12 @@ $(function(){
 			check = false;
 		}
 		
+		if(isNaN(v_emp_num)) 
+		{ 
+			alert("사번은 숫자로 입력해주세요"); 
+			check = false;
+		} 
+		
 		if(v_emp_email == "@")
 		{
 			alert("이메일을 입력해 주세요");
