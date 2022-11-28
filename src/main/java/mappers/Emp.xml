@@ -22,4 +22,18 @@
 		UPDATE emp SET emp_name = #{emp_name}, emp_passwd = #{emp_passwd}, emp_address = #{emp_address}, emp_email = #{emp_email} WHERE emp_num = #{emp_num}
 	</select>
 	
+	<select id="getUserInfo_deptnum" parameterType="int" resultType="EmpForSearch">
+		select * from emp where dept_num = #{deptnum}
+	</select>
+	
+	<select id="getAllUserInfo_Paging_Deptnum" parameterType="Map"  resultType="EmpForSearch">
+	 	SELECT * 
+		FROM 
+		(
+		    SELECT rownum rn, q.* 
+		    FROM ( select e.emp_name, e.emp_id, e.emp_num, e.emp_gender, a.auth_name, s.status_name, p.position_name, d.dept_name from emp e, authority a , dept d , position p, status s where e.auth_num = a.auth_num and e.dept_num = d.dept_num and e.position_num = p.position_num and s.status_num = e.status_num and e.dept_num = #{deptnum} order by e.emp_name
+		) q
+		) WHERE rn BETWEEN #{start} and #{end}
+ 	</select>
+	
 </mapper>

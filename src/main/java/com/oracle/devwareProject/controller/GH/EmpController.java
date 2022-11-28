@@ -23,6 +23,7 @@ import com.oracle.devwareProject.domain.EmpList;
 import com.oracle.devwareProject.domain.Page;
 import com.oracle.devwareProject.domain.Position;
 import com.oracle.devwareProject.domain.Status;
+import com.oracle.devwareProject.service.GH.DeptService;
 import com.oracle.devwareProject.service.GH.EmpService;
 import com.oracle.devwareProject.service.GH.Paging;
 
@@ -33,6 +34,8 @@ import lombok.RequiredArgsConstructor;
 public class EmpController 
 {
 	private final EmpService empService;
+	private final DeptService deptService;
+	
 	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 	
 	@GetMapping("/")
@@ -374,6 +377,9 @@ public class EmpController
 		//전체 직원수를 체크
 		int totalEmp = empService.getEmpCount();
 		
+		//부서 이름 조회를 위한 리스트
+		List<Dept> deptlist = new ArrayList<Dept>();
+		
 		System.out.println("모든 사용자의 수 : "+ totalEmp);
 		
 		Paging page = new Paging(totalEmp, currentPage);
@@ -381,8 +387,11 @@ public class EmpController
 		pg.setEnd(page.getEnd());
 		
 		try {
-			//직원 조회를 기능 수행
+			//직원 조회 기능 수행
 			emplist = empService.getAllUserInfo(pg);
+			//부서 조회 기능 수행
+			deptlist = deptService.getDeptInfo();
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -390,9 +399,52 @@ public class EmpController
 		model.addAttribute("emplist",emplist);
 		model.addAttribute("emp",emp);
 		model.addAttribute("page", page);
+		model.addAttribute("deptlist",deptlist);
 		
 		return "/member/admin/userlist";
 	}
+	
+	@RequestMapping("/userlistDeptSearch")
+	public String userlistDeptSearch(@RequestParam int deptnum, Model model, HttpSession session, String currentPage)
+	{
+		Emp emp = (Emp) session.getAttribute("emp");
+		System.out.println("EmpService userlist ['부서별 유저 조회 기능'] Start");
+		
+		//직원 조회를 위한 리스트
+		List<EmpForSearch> emplist = new ArrayList<EmpForSearch>();
+		
+		Page pg = new Page();
+		
+		//전체 직원수를 체크
+		int totalEmp = empService.getEmpCount(deptnum);
+		
+		//부서 이름 조회를 위한 리스트
+		List<Dept> deptlist = new ArrayList<Dept>();
+		
+		System.out.println("모든 사용자의 수 : "+ totalEmp);
+		
+		Paging page = new Paging(totalEmp, currentPage);
+		pg.setStart(page.getStart());
+		pg.setEnd(page.getEnd());
+		
+		try {
+			//직원 조회 기능 수행
+			emplist = empService.getUserInfo(pg,deptnum);
+			//부서 조회 기능 수행
+			deptlist = deptService.getDeptInfo();
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		model.addAttribute("emplist",emplist);
+		model.addAttribute("emp",emp);
+		model.addAttribute("page", page);
+		model.addAttribute("deptlist",deptlist);
+		
+		return "/member/admin/userlist";
+	}
+	
 	
 	@PostMapping("/editInfo")
 	public String upDateUser(Emp new_emp, Model model, HttpSession session)

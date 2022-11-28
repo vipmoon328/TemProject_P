@@ -1,7 +1,9 @@
 package com.oracle.devwareProject.dao.GH;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -57,6 +59,37 @@ public class EmpDaoImpl implements EmpDao {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public List<EmpForSearch> getUserInfo(int deptnum) {
+		List<EmpForSearch> emplist = new ArrayList<EmpForSearch>();
+		try {
+			emplist = session.selectList("getUserInfo_deptnum",deptnum);
+			System.out.println("EmpDaoImpl emplist.size: " + emplist.size());
+		} catch (Exception e) {
+			System.out.println("Error Occurred " + e.getMessage());
+		}
+		
+		return emplist;
+	}
+
+	@Override
+	public List<EmpForSearch> getUserInfo(Page pg, int deptnum) {
+		Map<String, Object> map = new HashMap();
+		map.put("start", pg.getStart());
+		map.put("end", pg.getEnd());
+		map.put("deptnum", deptnum);
+		
+		List<EmpForSearch> emplist = new ArrayList<EmpForSearch>();
+		try {
+			emplist = session.selectList("getAllUserInfo_Paging_Deptnum",map);
+			System.out.println("EmpDaoImpl emplist.size: " + emplist.size());
+		} catch (Exception e) {
+			System.out.println("Error Occurred " + e.getMessage());
+		}
+		
+		return emplist;
 	}
 
 

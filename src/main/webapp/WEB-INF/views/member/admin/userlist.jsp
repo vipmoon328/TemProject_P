@@ -11,11 +11,30 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+
+	function userlistDeptSearch()
+	{
+		var deptnum = $('#deptnum').val();
+		alert(deptnum);
+		location.href='<%=context%>/userlistDeptSearch?deptnum='+ deptnum;
+	}
+	
+</script>
 </head>
 <body>
 	<c:set var="num" value="${page.total-page.start+1 }"></c:set>
 	<div class="container-fluid">
 		<h3>사원 목록</h3>
+		<div>
+			부서별 조회:
+			<select name="deptnum" id="deptnum">
+				<c:forEach var="dept" items="${deptlist}">
+					<option value="${dept.dept_num}">${dept.dept_name}</option>
+				</c:forEach>
+			</select>
+			<button onclick="userlistDeptSearch()">조회하기</button>
+		</div>
 		<table class="table table-hover text-center">
 			<tr><th>사원명</th><th>사원 번호</th><th>사원 아이디</th><th>부서명</th><th>직급</th><th>사용자 등급</th><th>재직 여부</th></tr>
 			<c:forEach var="emp" items="${emplist}">

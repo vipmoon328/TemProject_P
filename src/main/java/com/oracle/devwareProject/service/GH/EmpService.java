@@ -121,4 +121,28 @@ public class EmpService {
 		return result;
 	}
 
+	public int getEmpCount(int deptnum) {
+		int count = 0;
+		System.out.println("EmpService getEmpCount Start");
+		List<EmpForSearch> emplist = new ArrayList<EmpForSearch>();
+		try {
+			emplist = ed.getUserInfo(deptnum);
+			count = emplist.size();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return count;
+	}
+
+	public List<EmpForSearch> getUserInfo(Page pg, int deptnum) {
+		System.out.println("EmpService getUserInfo Start");
+		List<EmpForSearch> emplist = new ArrayList<EmpForSearch>();
+		try {
+			emplist = ed.getUserInfo(pg,deptnum);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return emplist;
+	}
+
 }
