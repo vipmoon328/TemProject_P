@@ -22,10 +22,14 @@
 		UPDATE emp SET emp_name = #{emp_name}, emp_passwd = #{emp_passwd}, emp_address = #{emp_address}, emp_email = #{emp_email} WHERE emp_num = #{emp_num}
 	</select>
 	
+	<select id="updateEmpInfoWithAdmin" parameterType="EmpForSearch">
+		UPDATE emp SET emp_name = #{emp_name}, emp_passwd = #{emp_passwd}, emp_address = #{emp_address}, emp_email = #{emp_email}, auth_num = #{auth_num}, dept_num = #{dept_num}, position_num = #{position_num}, status_num = #{status_num} WHERE emp_num = #{emp_num}
+	</select>
+	
 	<select id="getUserInfo_deptnum" parameterType="int" resultType="EmpForSearch">
 		select * from emp where dept_num = #{deptnum}
 	</select>
-	
+		
 	<select id="getAllUserInfo_Paging_Deptnum" parameterType="Map"  resultType="EmpForSearch">
 	 	SELECT * 
 		FROM 

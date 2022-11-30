@@ -16,4 +16,6 @@ public interface EmpDao {
 	public List<EmpForSearch> getUserInfo(int deptnum);
 
 	public List<EmpForSearch> getUserInfo(Page pg, int deptnum);
+
+	public int updateEmpWithAdmin(EmpForSearch emp);
 }

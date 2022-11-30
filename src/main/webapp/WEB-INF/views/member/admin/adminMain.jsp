@@ -8,6 +8,7 @@
 </head>
 <body>
 	${emp.emp_name}님 환영합니다.<p>
-	<a href="/userlist">유저 리스트</a>
+	<a href="/userlist">유저 리스트</a><p>
+	<a href="/adminMyPageForm">관리자 마이페이지</a><p>
 </body>
 </html>

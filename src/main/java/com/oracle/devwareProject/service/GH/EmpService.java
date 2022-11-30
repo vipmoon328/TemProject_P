@@ -120,6 +120,18 @@ public class EmpService {
 		
 		return result;
 	}
+	
+	public int updateEmpWithAdmin(EmpForSearch emp) {
+		System.out.println("EmpService updateEmpWithAdmin Start");
+		int result = 0;
+		try {
+			result = ed.updateEmpWithAdmin(emp);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return result;
+	}
 
 	public int getEmpCount(int deptnum) {
 		int count = 0;
@@ -144,5 +156,7 @@ public class EmpService {
 		}
 		return emplist;
 	}
+
+
 
 }

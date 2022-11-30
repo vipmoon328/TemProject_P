@@ -60,7 +60,20 @@ public class EmpDaoImpl implements EmpDao {
 		
 		return result;
 	}
-
+	
+	@Override
+	public int updateEmpWithAdmin(EmpForSearch emp) {
+		int result = 0;
+		try {
+			result = session.update("updateEmpInfoWithAdmin",emp);
+			System.out.println("Update 결과 값:"+result);
+		}catch (Exception e) {
+			System.out.println("Error Occurred " + e.getMessage());
+		}
+		
+		return result;
+	}
+	
 	@Override
 	public List<EmpForSearch> getUserInfo(int deptnum) {
 		List<EmpForSearch> emplist = new ArrayList<EmpForSearch>();
@@ -91,6 +104,8 @@ public class EmpDaoImpl implements EmpDao {
 		
 		return emplist;
 	}
+
+
 
 
 }

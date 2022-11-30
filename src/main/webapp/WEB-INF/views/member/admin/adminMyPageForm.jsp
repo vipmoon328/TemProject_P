@@ -184,46 +184,122 @@
 </head>
 <body>
 	<div class="container-fluid">
-		<h3>마이페이지</h3>
-		<form action="/editInfo" method="post">
+		<h3>관리자 용 마이페이지</h3>
+		<form action="/adminEditInfo" method="post">
 			<table class="table table-hover text-center">
 				<tr>
 					<th><label for="emp_num">사번</label></th>
 					<td><input type="text"   class="form-control" readonly tabindex="-1" id="emp_num" name="emp_num" value="${emp.emp_num}"}></td>
 				</tr>
+				
 				<tr>
 					<th><label for="emp_name">이름</label></th>
 					<td><input type="text"  class="form-control" id="emp_name" name="emp_name" value="${emp.emp_name}"}></td>
 				</tr>
+				
 				<tr>
-					<th><label for="emp_id">아이디</label></th>
+					<th><label for="emp_name">아이디</label></th>
 					<td><input type="text"   class="form-control" readonly tabindex="-1" id="emp_id" name="emp_id" value="${emp.emp_id}"}></td>
 				</tr>
+				
 				<tr>
 					<th><label for="emp_passwd">비밀번호</label></th>
 					<td><input type="password"  class="form-control" id="emp_passwd" name="emp_passwd" value="${emp.emp_passwd}"}></td>
 				</tr>
+				
 				<tr>
 					<th><label for="chk_emp_passwd">비밀번호 재확인</label></th>
 					<td><input type="password"  class="form-control" id="chk_emp_passwd" name="chk_emp_passwd" value="${emp.emp_passwd}"}></td>
 				</tr>
+				
 				<tr>
 					<th>성별</th> 
 					<td>
 						<c:choose>
 							<c:when test="${emp.emp_gender eq '남'}">
 								<input type="radio" name="emp_gender" value="남" checked="checked">남성  
-								
 								<input type="radio" name="emp_gender" value="여" onclick="return false">여성  
 							</c:when>
 							<c:otherwise>
 								<input type="radio" name="emp_gender" value="남" onclick="return false">남성  
-								
 								<input type="radio" name="emp_gender" value="여" checked="checked">여성
 							</c:otherwise>
 						</c:choose>
 					</td>
 				</tr>
+				
+				<tr>
+					<th>권한 등급</th>
+					<td>
+						<select name="auth_num" id="auth_num">
+							<c:forEach var="auth" items="${authlist}">
+								<c:choose>
+									<c:when test="${auth.auth_num eq emp.auth_num}">
+										<option value="${auth.auth_num}" selected="selected">${auth.auth_name}</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${auth.auth_num}">${auth.auth_name}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>직책</th>
+					<td>
+						<select name="position_num" id="position_num">
+							<c:forEach var="pos" items="${poslist}">
+								<c:choose>
+									<c:when test="${pos.position_num eq emp.position_num}">
+										<option value="${pos.position_num}" selected="selected">${pos.position_name}</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${pos.position_num}">${pos.position_name}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>부서</th>
+					<td>
+						<select name="dept_num" id="dept_num">
+							<c:forEach var="dept" items="${deptlist}">
+								<c:choose>
+									<c:when test="${dept.dept_num eq emp.dept_num}">
+										<option value="${dept.dept_num}" selected="selected">${dept.dept_name}</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${dept.dept_num}">${dept.dept_name}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>상태</th>
+					<td>
+						<select name="status_num" id="status_num">
+							<c:forEach var="status" items="${statuslist}">
+								<c:choose>
+									<c:when test="${status.status_num eq emp.status_num}">
+										<option value="${status.status_num}" selected="selected">${status.status_name}</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${status.status_num}">${status.status_name}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
+					</td>
+				</tr>
+				
 				<tr>
 					<th><label for="user_email">이메일</label></th>
 					<td><input type="text" class="form-control" name="user_email1" id="user_email1" required="required"> <br> 

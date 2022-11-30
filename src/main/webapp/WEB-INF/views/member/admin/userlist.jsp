@@ -16,9 +16,9 @@
 	function userlistDeptSearch()
 	{
 		var deptnum = $('#deptnum').val();
-		alert(deptnum);
 		location.href='<%=context%>/userlistDeptSearch?deptnum='+ deptnum;
 	}
+	
 	
 </script>
 </head>
@@ -29,6 +29,7 @@
 		<div>
 			부서별 조회:
 			<select name="deptnum" id="deptnum">
+				<option value="0">전체</option>
 				<c:forEach var="dept" items="${deptlist}">
 					<option value="${dept.dept_num}">${dept.dept_name}</option>
 				</c:forEach>
@@ -49,16 +50,32 @@
 			</c:forEach>
 		</table>
 		
-		<c:if test="${page.startPage > page.pageBlock }">
-			<a href="userlist?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
-		</c:if>
-		<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-			<a href="userlist?currentPage=${i}">[${i}]</a>
-		</c:forEach>
-		<c:if test="${page.endPage < page.totalPage }">
-			<a href="userlist?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
-		</c:if>	
-		
+		<c:choose>
+			<c:when test="${deptnum eq 0}">
+				<c:if test="${page.startPage > page.pageBlock }">
+					<a href="userlist?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
+				</c:if>
+				<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+					<a href="userlist?currentPage=${i}">[${i}]</a>
+				</c:forEach>
+				<c:if test="${page.endPage < page.totalPage }">
+					<a href="userlist?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
+				</c:if>	
+			</c:when>
+			
+			<c:otherwise>
+				<c:if test="${page.startPage > page.pageBlock }">
+					<a href="userlistDeptSearch?currentPage=${page.startPage-page.pageBlock}&&deptnum=${deptnum}">[이전]</a>
+				</c:if>
+				<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+					<a href="userlistDeptSearch?currentPage=${i}&&deptnum=${deptnum}">[${i}]</a>
+				</c:forEach>
+				<c:if test="${page.endPage < page.totalPage }">
+					<a href="userlistDeptSearch?currentPage=${page.startPage+page.pageBlock}&&deptnum=${deptnum}">[다음]</a>
+				</c:if>	
+			</c:otherwise>
+		</c:choose>
+	
 	</div>
 </body>
 </html>
